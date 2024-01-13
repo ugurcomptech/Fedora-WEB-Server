@@ -137,7 +137,7 @@ Conf dosyamızın içerisi boş gelecektir. Ubuntu Serverımızda yaptığımız
 
 Config dosyamızı test etmek için `apachectl configtest` yazıyoruz. 
 
-`systemctl restart httpd` komutuyla servisimizi yeniden başlatıyoruz. Bu kısımda Seleniux ile ilgili bazı hatalar alacağız.
+`systemctl restart httpd` komutuyla servisimizi yeniden başlatıyoruz. Bu kısımda SELinux ile ilgili bazı hatalar alacağız.
 
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/ba46f789-18fe-4a1c-aeb0-9786cf72b9a7)
 

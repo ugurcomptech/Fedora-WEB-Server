@@ -95,7 +95,7 @@ nano /var/www/sirket1.com/dosyalar/index.html
 Dosyamızı oluşturduktan sonra sirket1.com.conf adında bir config dosyası oluşturacağız:
 
 ```
-nano /etc/apache2/sites-enabled/sirket1.com.conf
+nano /etc/httpd/conf.d/sirket1.com.conf
 ```
 
 Conf dosyamızın içerisi boş gelecektir. Ubuntu Serverımızda yaptığımız tanımların aynısını burayada yapabiliriz:
@@ -287,6 +287,152 @@ Bu ayarları yaptıktan sonra tarayıcınızı açıp test edebilirsiniz.
 
 
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/aee7090d-dee5-47d1-8c23-b2a892962da2)
+
+
+
+## Aynı Portta Çoklu Site Yayınlama
+
+MYSQL server ve PHP Apache modüllerini yüklüyoruz:
+
+
+```
+dnf install mysql-server php php-mysqlnd -y
+```
+
+Servisimizi `systemctl restart httpd` yazarak yeniden başlatıyoruz.
+
+### PHP
+
+Artık serverımızda PHP kodlarıda çalışacaktır. Bunu şöyle test edebiliriz.
+
+`nano /var/www/sirket1.com/dosyalar/info.php` yazarak info.php dosyasını oluşturup içerisine aşağıdaki komutu yazabiliriz.
+
+```
+<?php
+phpinfo ();
+?>
+```
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/146871f5-c097-40bc-9a59-bb27d944c544)
+
+
+### MYSQL
+
+
+MySQL veritabanı sunucunuzu güvenli bir şekilde yapılandıralım:
+
+```
+mysql_secure_installation
+```
+
+Bu komutu yazdıktan sonra ihtiyaçlarınıza göre gelen sorulara Yes veya No Diyebilirsiniz.
+
+DB hataları almamak için aşağıdaki komutları yazabilirsiniz:
+
+```
+sudo systemctl start mariadb
+sudo systemctl enable mariadb
+```
+
+`mysql_secure_installation` yazdıktan sonra şifre belirleyebilirsiniz. Eğer şifre belirleyemediyseniz aşağıdaki komutu yazabilirsiniz.
+
+```
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234-Aaa!';
+```
+
+Aşağıdaki komutu yazarak `mysql` girişi yapabilirsiniz.
+
+```
+mysql -u root -p
+```
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/92c9c0dd-ff7b-42ef-babc-cd06f2bec5f4)
+
+Bu şekilde şifrenizi girerek giriş yapabilirsiniz.
+
+```
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+3 rows in set (0,001 sec)
+MariaDB [(none)]>
+```
+
+Aşağıdaki komutları yazarak tabloları görüntüleyebilirsiniz.
+
+```
+MariaDB [(none)]> use mysql
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [mysql]> show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| column_stats              |
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| global_priv               |
+| gtid_slave_pos            |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| index_stats               |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| proxies_priv              |
+| roles_mapping             |
+| servers                   |
+| slow_log                  |
+| table_stats               |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| transaction_registry      |
+| user                      |
++---------------------------+
+31 rows in set (0,001 sec)
+
+MariaDB [mysql]>
+```
+
+Tabloların içeriğini görüntülemek için aşağıdaki sorguyu yazabilirsiniz.
+
+```
+MariaDB [mysql]> SELECT user,host FROM user;
++-------------+-----------+
+| User        | Host      |
++-------------+-----------+
+| mariadb.sys | localhost |
+| mysql       | localhost |
+| root        | localhost |
++-------------+-----------+
+3 rows in set (0,001 sec)
+
+MariaDB [mysql]>
+```
+
+
+
+
+
+
 
 
 

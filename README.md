@@ -161,6 +161,132 @@ Sunucmuzun IP adresini  tarayıcıya yazarak test ediyoruz:
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/cab90e27-533f-4426-ac30-7ced0087f8e5)
 
 
+## Aynı Portta Çoklu Site Yayınlama
+
+Şimdi bunu test etmek için ikinci bir site daha oluşturacağız.
+
+```
+ mkdir -p /var/www/sirket2.com/dosyalar
+```
+
+Gerekli izinlei verelim:
+
+```
+chown -R apache: /var/www/sirket2.com/dosyalar
+chown -R 755 /var/www/sirket2.com/dosyalar
+```
+
+İndex.html dosyamızı açalım ve içine istediğimizi yazalım
+
+```
+nano /var/www/sirket2.com/dosyalar/index.html
+```
+
+Şimdi `.conf` dosyalarımızı yapılandıralım:
+
+
+
+sirket1.conf
+
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/sirket1.com/dosyalar
+        ServerName   ugur.com
+        ServerAlias  www.ugur.com
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog /var/www/sirket1.com/error.log
+        CustomLog /var/www/sirket1.com/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+
+```
+
+
+sirket2.conf
+
+
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/sirket2.com/dosyalar
+        ServerName   ugur1.com
+        ServerAlias  www.ugur1.com
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog /var/www/sirket2.com/error.log
+        CustomLog /var/www/sirket2.com/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+
+ Şimdi apache servisimizi `systemctl restart httpd` yazarak yeniden başlatalım.
+
+ uan gerekli yapılandırmaları yaptık. Şimdi bunu ister DNS serverımıza tanıtabiliriz, istersek de kendi localimizdeki hosts dosyasına tanıtabiliriz. Daha kolay olması açısından Windows bilgisayarımızdaki host dosyasına tanıtalım.
+
+`C:\Windows\System32\drivers\etc` dosya yoluna gidip `hosts` dosyasını masaüstüne yapıştırın. Dosyası açtıktan sonra aşağıdaki tanımları yapın ve kaydedin. Kaydettikten sonra masaüstündeki dosyası tekrardan `C:\Windows\System32\drivers\etc` dosya yoluna yapıştırın.
+
+
+```
+172.16.1.30	ugur.com
+172.16.1.30	www.ugur.com
+
+172.16.1.30	ugur1.com
+172.16.1.30	www.ugur1.com
+```
+
+
+Bu ayarları yaptıktan sonra tarayıcınızı açıp test edebilirsiniz.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/35fe1fb4-495a-40ae-914a-24c16aaf4523)
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/aee7090d-dee5-47d1-8c23-b2a892962da2)
 
 
 

@@ -429,11 +429,65 @@ MariaDB [mysql]>
 ```
 
 
+## PhpMyAdmin
+
+PhpMyAdmini indirelim.
+
+
+```
+dnf install mysql-server php php-mysqlnd -y
+```
+
+Gerekli kurulumlar yapıldıktan sonra bir `MYSQL`e bağlanıp `PhpMyAdmin` için kullanıcı oluşturalım.
+
+
+```
+MariaDB [(none)]> CREATE USER 'phpmyadmin'@'localhost' IDENTIFIED BY '1234-Aaa!';
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON *.* TO 'phpmyadmin'@'localhost';
+```
 
 
 
 
+Bunları yazdıktan sonra tarayıcımıza girip test edelim.
 
+**Not:** Test etmeden önce bir kaç bilgi vereceğim. `http://alanadi.com/phpmyadmin/` olarak yazarsanız yüksek ihtimalle `Forbidden – You don’t have permission to access / on this server` hatası alacaksınız. Bunun sebebi PhpMyAdmin de gerekli yetkilerimizin olmaması. Log dosyalarına bakarakta bunları görebiliriz.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/039d5299-edb7-4848-afbe-8fcc6de6e42b)
+
+
+Bu hatayı gidermek için aşağıdaki komutu yazabilirsiniz.
+
+```
+sudo chmod -R 755 /usr/share/phpMyAdmin
+```
+
+Oluşan hata yüksek ihtimalle bu komutla düzelmeyecektir. Bu hatayı düzeltmek için PhpMyAdminin .conf dosyasına gideceğiz. `nano /etc/httpd/conf.d/phpMyAdmin.conf` yazarak .conf dosyasına gidelim ve aşağıdaki komutları yazalım.
+
+```
+<Directory /usr/share/phpMyAdmin/>
+   AddDefaultCharset UTF-8
+   Options Indexes FollowSymLinks MultiViews
+   DirectoryIndex index.php
+   AllowOverride all
+   Require all granted
+   Require local
+</Directory>
+```
+
+Bu işlemi yaptıktan sonra `systemctl restart httpd` yazarak servisimizi restart ediyoruz.
+
+
+Tarayıcımızı açıp test edelim.
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/447590da-fc25-4021-a184-8c8b28df533a)
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/0c8ac2ac-4590-4396-aeed-37a78a212e89)
+
+
+PhpMyAdmin başarılı bir şekilde kurulmuştur.
 
 
 

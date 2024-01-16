@@ -525,10 +525,35 @@ Kullanıcımızı ve Databaseyi oluşturduktan sonra şimdi giriş yapalım:
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/e8e9eb16-65b7-4df7-9ee5-4999bf5f4226)
 
 
-
-
+`Submit` butonuna bastıktan sonra karşınıza aşağıdaki gibi bir ekran gelebilir. Eğer gelmediyse devam edin, geldiyse aşağıdaki adımları takip ederek bu sorunu düzeltelim.
 
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/cd290d14-18f7-4ab1-9bd6-94bc27ad7ecf)
+
+
+
+**Not:** Bu sorunun oluşmasının sebebi `wp-config.php` dosyasının manual olarak oluşamamasındandır. Bu sorunu gidermek için aşağıdaki adımları takip ediniz:
+
+1- Ekranda çıkan `php` kodlarını kopyalayın
+2- Terminale/konsola gelip `nano wp-config.php` yazın.
+3- Kopyalamış olduğunuz `php` kodunu buraya yapıştırın ve kaydedip çıkın.
+
+Butona tıkladıktan sonra eğer işlemleri doğru yaptıysanız aşağıdaki gibi bir ekran gelecektir.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/6410a996-0388-4f33-b521-5ad15c3348e0)
+
+
+Bu kısıma gerekli bilgileri girdikten sonra `Install WordPress` butonuna tıklayın. İşlem tammadır
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/d2a52d0b-3e30-4ce5-93c6-cdca49ca5ab0)
+
+
+Gerekli bilgileri doldurduktan sonra giriş yapın.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/391105aa-5f7b-4147-9a56-94cfc97f7cc5)
+
+
+WordPress kurulumu başarıyla tamamlanmıştır.
+
 
 
 

@@ -490,5 +490,35 @@ Tarayıcımızı açıp test edelim.
 PhpMyAdmin başarılı bir şekilde kurulmuştur.
 
 
+## Wordpress Kurulumu
+
+Aşağıdaki komutu yazarak `Wordpressi` indirelim
+
+```
+wget https://wordpress.org/latest.tar.gz
+```
+
+`latest.tar.gz` dosyamızın geldiğini görüyoruz. `tar xzfv latest.tar.gz` yazarak arşiv dosyamızı ayıklıyoruz. `Wordpress` adında bir dizin geldiğini göreceksiniz. Bu dizin içerisine girip şu komutu yazmanız gerekecektir. `cp -r * ..` Dizin içerisindeki dosyaları, klasörleri bir üst dizine koplayacaktır. Bu işlem yapıldıktan sonra aşağıdaki komutları tek tek yazın.
+
+```
+cd ..
+rm -rf wordpress/
+rm -rf latest.tar.gz
+```
+
+Karışıklık çıkarmaması adına bunları siliyoruz. Şimdi tarayıcımızı açıp test edelim:
+
+
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/e976884b-181a-4f6f-9243-cb63a5add766)
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/e8e9eb16-65b7-4df7-9ee5-4999bf5f4226)
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/cd290d14-18f7-4ab1-9bd6-94bc27ad7ecf)
+
+
 
 

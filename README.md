@@ -555,6 +555,144 @@ Gerekli bilgileri doldurduktan sonra giriş yapın.
 WordPress kurulumu başarıyla tamamlanmıştır.
 
 
+## SSL Kurulumu
+
+SSL (Secure Sockets Layer), internet üzerindeki veri iletimini şifreleyen bir güvenlik protokolüdür. Bu, kullanıcıların web siteleri aracılığıyla bilgi gönderirken, üçüncü şahısların bu bilgilere erişmesini zorlaştırarak güvenli bir iletişim sağlar.
+
+Şimdi serverımıza SSL kuracağız. Aşağıdaki komutu yazarak gerekli indirmeleri yapalım.
+
+```
+sudo dnf install certbot python3-certbot-apache
+```
+
+İlgili kurulumları yapmak için `cerbot --apache` yazıyoruz. Bunu yazınca aşağıdaki gibi bir hata alabilirsiniz. Bu hatayı almanızın sebebi ilgili alan adınızn herhangi bir DNS bölgesi olmamasından kaynaklıdır. Biz kendi localimizde denediğimiz için böyle bir hata vermesi gayet normaldir.
+
+```
+[root@fedora masterweb]# certbot --apache
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+
+Which names would you like to activate HTTPS for?
+We recommend selecting either all domains, or all domains in a VirtualHost/server block.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: ugur.com
+2: www.ugur.com
+3: ugur1.com
+4: www.ugur1.com
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate numbers separated by commas and/or spaces, or leave input
+blank to select all options shown (Enter 'c' to cancel): 4
+Requesting a certificate for www.ugur1.com
+
+Certbot failed to authenticate some domains (authenticator: apache). The Certificate Authority reported these problems:
+  Domain: www.ugur1.com
+  Type:   dns
+  Detail: DNS problem: NXDOMAIN looking up A for www.ugur1.com - check that a DNS record exists for this domain; DNS problem: NXDOMAIN looking up AAAA for www.ugur1.com - check that a DNS record exists for this domain
+
+Hint: The Certificate Authority failed to verify the temporary Apache configuration changes made by Certbot. Ensure that the listed domains point to this Apache server and that it is accessible from the internet.
+
+Some challenges have failed.
+Ask for help or search for solutions at https://community.letsencrypt.org. See the logfile /var/log/letsencrypt/letsencrypt.log or re-run Certbot with -v for more details.
+[root@fedora masterweb]#
+```
 
 
+### OPENSSL
+
+Biz de openssl ile kuracağız. Bu türl sertifikalara `Self-signed` denir. Self-signed (kendi imzalı) bir SSL sertifikası, bir güvenlik sertifikası sağlayıcısı yerine web sitesinin kendisi tarafından oluşturulan ve imzalanan bir sertifikadır. Bu tür sertifikalar genellikle test ortamları veya kişisel kullanım için kullanılır
+
+Aşağıdaki komutu yazarak işlemi başlatalım:
+
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/pki/tls/private/server.key -out /etc/pki/tls/certs/server.crt
+```
+
+Aşağıdaki bilgileri doldurunuz 
+
+```
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:
+State or Province Name (full name) []:
+Locality Name (eg, city) [Default City]:
+Organization Name (eg, company) [Default Company Ltd]:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []:
+Email Address []:
+```
+
+
+.conf dosyamıza  `/etc/httpd/conf.d/sirket1.com.conf`  yazarak gidelim ve aşağıdaki configleri yapalım. Virtual kısmına `<VirtualHost *:443>` yazıyoruz.
+
+```
+        SSLEngine on
+        SSLCertificateFile /etc/pki/tls/certs/server.crt
+        SSLCertificateKeyFile /etc/pki/tls/private/server.key
+```
+
+Bunları yazdıktan sonra kaydedip çıkıyoruz. `systemctl restart httpd` yazarak servisimizi yeniden başlatıyoruz.
+
+
+Web sayfamızın Sertifikasını incelediğimizde bizim verdiğimiz bilgilerle kurulduğu görülmüştür.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/f0fd0535-7d94-4087-b4e3-b2cc183e7672)
+
+
+Hala güvenli değil ibaresi alıyor olabilirsiniz bunun sebebi kurmuş olduğumuz sertifikanın `Self-signed` olmasındandır.
+
+### HTTPS Redirect
+
+Bunun için ` nano /etnano /etc/httpd/conf.d/sirket1.com-80.conf` yazıyoruz ve dosyamız oluşuyor. Bunun içerisine ` nano /etnano /etc/httpd/conf.d/sirket1.com.conf` dosyamızın içerisindeki verileri alıp yapıştırıyoruz ve aşağıdaki ayarları yapalım.
+
+```
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+
+
+        ServerName   ugur.com
+        ServerAlias www.ugur.com
+        Redirect permanent / https://www.ugur.com
+
+        #SSLEngine on
+        #SSLCertificateFile /etc/pki/tls/certs/server.crt
+        #SSLCertificateKeyFile /etc/pki/tls/private/server.key
+
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog /var/www/sirket1.com/error.log
+        CustomLog /var/www/sirket1.com/access.log combined
+
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+```
+
+Şimdi web sitemize giriş yapalım. 
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/92198316-bebe-400a-9d89-f2a545922005)
+
+Bu şekilde giriş yaptığınızda tekrardan `https` kısmına yönlendirdiğini görebilirsiniz.
+
+SSL kurulumu başarılı bir şekilde yapılmıştır.
 

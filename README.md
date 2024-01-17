@@ -533,9 +533,9 @@ Kullanıcımızı ve Databaseyi oluşturduktan sonra şimdi giriş yapalım:
 
 **Not:** Bu sorunun oluşmasının sebebi `wp-config.php` dosyasının manual olarak oluşamamasındandır. Bu sorunu gidermek için aşağıdaki adımları takip ediniz:
 
-1- Ekranda çıkan `php` kodlarını kopyalayın
-2- Terminale/konsola gelip `nano wp-config.php` yazın.
-3- Kopyalamış olduğunuz `php` kodunu buraya yapıştırın ve kaydedip çıkın.
+- Ekranda çıkan `php` kodlarını kopyalayın
+- Terminale/konsola gelip `nano wp-config.php` yazın.
+- Kopyalamış olduğunuz `php` kodunu buraya yapıştırın ve kaydedip çıkın.
 
 Butona tıkladıktan sonra eğer işlemleri doğru yaptıysanız aşağıdaki gibi bir ekran gelecektir.
 

@@ -598,7 +598,7 @@ Ask for help or search for solutions at https://community.letsencrypt.org. See t
 
 ### OPENSSL
 
-Biz de openssl ile kuracağız. Bu türl sertifikalara `Self-signed` denir. Self-signed (kendi imzalı) bir SSL sertifikası, bir güvenlik sertifikası sağlayıcısı yerine web sitesinin kendisi tarafından oluşturulan ve imzalanan bir sertifikadır. Bu tür sertifikalar genellikle test ortamları veya kişisel kullanım için kullanılır
+Biz de openssl ile kuracağız. Bu tür sertifikalara `Self-signed` denir. Self-signed (kendi imzalı) bir SSL sertifikası, bir güvenlik sertifikası sağlayıcısı yerine web sitesinin kendisi tarafından oluşturulan ve imzalanan bir sertifikadır. Bu tür sertifikalar genellikle test ortamları veya kişisel kullanım için kullanılır
 
 Aşağıdaki komutu yazarak işlemi başlatalım:
 

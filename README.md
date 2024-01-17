@@ -1,5 +1,7 @@
 # Fedora-WEB-Server
 
+Apache, web sitelerini barındırmak ve yönetmek için güçlü ve yaygın olarak kullanılan bir web sunucu yazılımıdır. Fedora üzerinde Apache kurulumu ve yapılandırması genellikle paket yöneticisi aracılığıyla kolayca gerçekleştirilebilir. Biz Apache servisiyle bu işlemleri yapacağız.
+
 ## Kurulum
 
 Fedora serverımıza apacheyi indirelim:

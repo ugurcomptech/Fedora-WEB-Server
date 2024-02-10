@@ -292,7 +292,7 @@ Bu ayarları yaptıktan sonra tarayıcınızı açıp test edebilirsiniz.
 
 
 
-## Aynı Portta Çoklu Site Yayınlama
+## PHP MYSQL
 
 MYSQL server ve PHP Apache modüllerini yüklüyoruz:
 

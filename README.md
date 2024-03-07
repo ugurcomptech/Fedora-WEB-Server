@@ -597,6 +597,33 @@ Ask for help or search for solutions at https://community.letsencrypt.org. See t
 [root@fedora masterweb]#
 ```
 
+### Public Sunucu da SSL Kurulumu
+
+İşlemler tamamen aynı herhangi bir değişiklik yok. Terminale `certbot --apache` yazıyoruz.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/faeafe10-c5c0-4ca6-be4b-8c5e2032c4b8)
+
+Bu kısımda SSL sertifikasını kurmak istediğiniz alan adını belirtiyorsunuz. Ben "altimasiciyorum.com.tr" alan adımı seçiyorum. 
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/6b56ddc0-bc6b-4cf1-92da-60de4893ad11)
+
+
+
+Bana burada belirtmiş olduğum sitede zaten bir SSL olduğunu ve sertifikayı kaldırıp yeniden yükleyebileceğimizi yada sertifikayı yenileyip değiştirebileceğimizi söylüyor. Ben sertifikayı tekrar yükleyeceğim. 
+
+
+Kurulum otomatik tamamlandı ve SSL sertifikamız başarılı bir şekilde kuruldu. SSL sertifkanızın .conf dosya yoluna gitmek için `/etc/httpd/conf.d/alanadi.com-le-ssl.com` yazabilirsiniz.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/dd3dbdae-f216-44c0-acaa-27dd7f5093c0)
+
+
+
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/145ec110-d628-4a4d-913a-0848703322d3)
+
+
+
+**Not:** Kurmuş olduğumuz SSL let's encrypt sertifikasıdır. Her 3 ayda bir yenilenmesi gerekir.
 
 ### OPENSSL
 

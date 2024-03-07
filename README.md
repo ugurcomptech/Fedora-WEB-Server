@@ -611,16 +611,12 @@ Bu kısımda SSL sertifikasını kurmak istediğiniz alan adını belirtiyorsunu
 
 Bana burada belirtmiş olduğum sitede zaten bir SSL olduğunu ve sertifikayı kaldırıp yeniden yükleyebileceğimizi yada sertifikayı yenileyip değiştirebileceğimizi söylüyor. Ben sertifikayı tekrar yükleyeceğim. 
 
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/145ec110-d628-4a4d-913a-0848703322d3)
+
 
 Kurulum otomatik tamamlandı ve SSL sertifikamız başarılı bir şekilde kuruldu. SSL sertifkanızın .conf dosya yoluna gitmek için `/etc/httpd/conf.d/alanadi.com-le-ssl.com` yazabilirsiniz.
 
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/dd3dbdae-f216-44c0-acaa-27dd7f5093c0)
-
-
-
-
-![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/145ec110-d628-4a4d-913a-0848703322d3)
-
 
 
 **Not:** Kurmuş olduğumuz SSL let's encrypt sertifikasıdır. Her 3 ayda bir yenilenmesi gerekir.

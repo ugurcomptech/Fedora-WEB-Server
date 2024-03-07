@@ -619,6 +619,11 @@ Kurulum otomatik tamamlandı ve SSL sertifikamız başarılı bir şekilde kurul
 ![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/dd3dbdae-f216-44c0-acaa-27dd7f5093c0)
 
 
+
+Web sitemize giriş yapıp ilgili sertifikayıda kontrol edebilirsiniz.
+
+![image](https://github.com/ugurcomptech/Fedora-WEB-Server/assets/133202238/92da491f-2283-4f19-b709-6b9a0d3454ff)
+
 **Not:** Kurmuş olduğumuz SSL let's encrypt sertifikasıdır. Her 3 ayda bir yenilenmesi gerekir.
 
 ### OPENSSL
